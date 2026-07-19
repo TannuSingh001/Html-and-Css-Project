@@ -76,7 +76,7 @@ nav ul li:hover {
   transition: 0.2s ease-in;
 }
 .hero-section {
-  background-image: url(images/hero_image.png);
+  background-image: url(images/tuneimage.png);
   height: 100vh;
   display: grid;
   color: white;
