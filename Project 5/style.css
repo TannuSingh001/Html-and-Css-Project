@@ -1,0 +1,313 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+#home{
+    width: 100%;
+    min-height: 100vh;
+}
+
+nav{
+    width: 100%;
+    height: 18vh;
+    position: fixed;
+    top: 0;
+    z-index: 4;
+}
+
+.nav1{
+    width: 100%;
+    height: 70%;
+    background: rgb(13,32,111);
+      display: flex;
+     justify-content: center;
+      align-items: center; 
+}
+
+.nav2{
+    width: 100%;
+    height: 30%;
+    background: white;
+    display: flex;
+flex-direction: column;
+    align-items: center;
+    
+}
+.nav2 ul{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+list-style: none;
+gap: 47px;
+cursor: pointer;
+
+}
+.nav2 ul a{
+    text-decoration: none;
+    color: black;
+}
+.nav2 ul :hover{
+    color: grey;
+}
+.leftnav
+{ width: 50%; 
+    height: 100%; 
+    font-size: 30px; 
+    color: white; 
+    display: flex;
+     justify-content: center;
+      align-items: center; 
+      font-style: 
+    italic; font-weight: 500; }
+
+.rightnav{
+    width: 50%; 
+    height: 100%; 
+    font-size: 30px; 
+    display: flex;
+     justify-content: center;
+      align-items: center; 
+      flex-direction: column;
+}
+.top{
+    width: 100%;
+    height: 50%;
+  
+     display: flex;
+     justify-content: center;
+      align-items: center; 
+
+}
+.bottom{
+    width: 100%;
+    height: 50%;
+   
+     display: flex;
+     justify-content: center;
+      align-items: center; 
+
+}
+.loc{
+    width: 1em;
+    height: 1em;
+}
+.findus{
+      width: 5em;
+    height: 100%;
+         display: flex;
+     justify-content: center;
+      align-items: center; 
+      color: white;
+      font-size: small;
+}
+.input{
+    bottom: 10px;
+}
+.input input{
+    
+     width: 15em;
+  
+}
+.toll{
+    color: white;
+font-size: 15px;
+}
+.no{
+    color: orange;
+    font-size: 15px;
+    margin-left: 10px;
+}
+.main1{
+    width:100%;
+    height:700px;
+    background-image:url("bg.jpg");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    position:relative;
+}
+
+.bg{
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.35);
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:1;
+}
+
+.mainbox{
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:2;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+}
+
+.fspan{
+    font-size:25px;
+    letter-spacing:5px;
+    margin-bottom:15px;
+}
+
+.sspan{
+    font-size:65px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.tspan{
+    width:700px;
+    max-width:90%;
+    font-size:20px;
+    line-height:32px;
+}
+/* ========================= */
+/* Tablet (992px) */
+/* ========================= */
+
+@media (max-width:992px){
+
+    nav{
+        height:auto;
+    }
+
+    .nav1{
+        flex-direction:column;
+        padding:15px 0;
+    }
+
+    .leftnav,
+    .rightnav{
+        width:100%;
+    }
+
+    .leftnav{
+        font-size:28px;
+        margin-bottom:10px;
+    }
+
+    .top,
+    .bottom{
+        justify-content:center;
+    }
+
+    .sspan{
+        font-size:50px;
+    }
+
+    .fspan{
+        font-size:22px;
+    }
+
+    .tspan{
+        width:90%;
+        font-size:18px;
+    }
+}
+
+
+/* ========================= */
+/* Mobile (768px) */
+/* ========================= */
+
+@media (max-width:768px){
+
+    .nav2{
+        height:auto;
+        padding:10px 0;
+    }
+
+    .nav2 ul{
+        flex-wrap:wrap;
+        gap:20px;
+    }
+
+    .leftnav{
+        font-size:24px;
+    }
+
+    .input input{
+        width:180px;
+    }
+
+    .main1{
+        height:100vh;
+    }
+
+    .fspan{
+        font-size:18px;
+        letter-spacing:3px;
+    }
+
+    .sspan{
+        font-size:38px;
+    }
+
+    .tspan{
+        width:90%;
+        font-size:16px;
+        line-height:28px;
+    }
+}
+
+
+/* ========================= */
+/* Small Mobile (480px) */
+/* ========================= */
+
+@media (max-width:480px){
+
+    .leftnav{
+        font-size:20px;
+    }
+
+    .top{
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .bottom{
+        flex-direction:column;
+        gap:5px;
+    }
+
+    .findus{
+        width:auto;
+    }
+
+    .input input{
+        width:160px;
+    }
+
+    .nav2 ul{
+        gap:12px;
+        font-size:14px;
+    }
+
+    .fspan{
+        font-size:15px;
+        letter-spacing:2px;
+    }
+
+    .sspan{
+        font-size:28px;
+    }
+
+    .tspan{
+        font-size:14px;
+        line-height:24px;
+    }
+}

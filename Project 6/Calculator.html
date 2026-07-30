@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Calculator</title>
+</head>
+<body>
+
+<div class="calculator">
+
+    <div class="display">
+        <input type="text" id="dislay" readonly>
+    </div>
+
+    <div class="buttons">
+
+        <div class="row">
+            <button onclick="document.querySelector('#dislay').value=''">AC</button>
+
+            <button onclick="document.querySelector('#dislay').value=document.querySelector('#dislay').value.slice(0,-1)">C</button>
+
+            <button onclick="document.querySelector('#dislay').value=document.querySelector('#dislay').value.slice(0,-1)">DEL</button>
+
+           <button onclick="document.querySelector('#dislay').value = eval(document.querySelector('#dislay').value)">
+    =
+</button>
+        </div>
+
+        <div class="row row2">
+            <!-- <button onclick="document.querySelector('#dislay').value+='sin('">sin</button>
+
+            <button onclick="document.querySelector('#dislay').value+='cos('">cos</button>
+
+            <button onclick="document.querySelector('#dislay').value+='tan('">tan</button>
+
+            <button onclick="document.querySelector('#dislay').value+='√'">&radic;</button> -->
+       <button onclick="sinf()">sin</button> <button onclick="cosf()">cos</button> <button onclick="tanf()">tan</button> <button onclick="sqrt()">&radic;</button>
+        </div>
+
+        <div class="row">
+            <button onclick="document.querySelector('#dislay').value+='9'">9</button>
+
+            <button onclick="document.querySelector('#dislay').value+='8'">8</button>
+
+            <button onclick="document.querySelector('#dislay').value+='7'">7</button>
+
+            <button onclick="document.querySelector('#dislay').value+='/'">÷</button>
+        </div>
+
+        <div class="row">
+            <button onclick="document.querySelector('#dislay').value+='6'">6</button>
+
+            <button onclick="document.querySelector('#dislay').value+='5'">5</button>
+
+            <button onclick="document.querySelector('#dislay').value+='4'">4</button>
+
+            <button onclick="document.querySelector('#dislay').value+='+'">+</button>
+        </div>
+
+        <div class="row">
+            <button onclick="document.querySelector('#dislay').value+='3'">3</button>
+
+            <button onclick="document.querySelector('#dislay').value+='2'">2</button>
+
+            <button onclick="document.querySelector('#dislay').value+='1'">1</button>
+
+            <button onclick="document.querySelector('#dislay').value+='*'">*</button>
+        </div>
+
+        <div class="row">
+            <button onclick="document.querySelector('#dislay').value+='0'">0</button>
+
+            <button onclick="document.querySelector('#dislay').value+='00'">00</button>
+
+            <button onclick="document.querySelector('#dislay').value+='.'">.</button>
+
+            <button onclick="document.querySelector('#dislay').value+='-'">-</button>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
