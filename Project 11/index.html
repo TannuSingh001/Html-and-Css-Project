@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Neon Pac-Man</title>
+
+
+    <style>
+
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        /* =========================
+           BODY
+        ========================= */
+
+        body {
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 25px;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: white;
+
+            background:
+
+                radial-gradient(
+                    circle at 15% 20%,
+                    #7c3aed55,
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 85% 80%,
+                    #06b6d455,
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at center,
+                    #111827,
+                    #020617 70%
+                );
+
+            overflow-x: hidden;
+        }
+
+
+        /* =========================
+           GAME CONTAINER
+        ========================= */
+
+        .game-container {
+
+            width: 100%;
+
+            max-width: 700px;
+
+            padding: 28px;
+
+            background:
+                rgba(15, 23, 42, 0.88);
+
+            backdrop-filter:
+                blur(18px);
+
+            border:
+                1px solid #334155;
+
+            border-radius: 28px;
+
+            box-shadow:
+
+                0 30px 80px
+                rgba(0, 0, 0, 0.65),
+
+                0 0 50px
+                rgba(124, 58, 237, 0.18);
+
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .game-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .logo {
+
+            width: 60px;
+
+            height: 60px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffe600,
+                    #f59e0b
+                );
+
+            color: #111827;
+
+            font-size: 35px;
+
+            box-shadow:
+
+                0 0 25px
+                #ffe60088;
+
+            animation:
+                logoGlow 2s infinite alternate;
+
+        }
+
+
+        @keyframes logoGlow {
+
+            from {
+                box-shadow:
+                    0 0 15px #ffe60055;
+            }
+
+            to {
+                box-shadow:
+                    0 0 35px #ffe600cc;
+            }
+
+        }
+
+
+        .game-header h1 {
+
+            font-size: 30px;
+
+            letter-spacing: 4px;
+
+            color: #ffe600;
+
+            text-shadow:
+                0 0 10px #ffe60066;
+
+        }
+
+
+        .game-header p {
+
+            margin-top: 5px;
+
+            color: #94a3b8;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =========================
+           SCORE PANEL
+        ========================= */
+
+        .info {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 12px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .info-card {
+
+            padding: 14px 18px;
+
+            background:
+                rgba(30, 41, 59, 0.85);
+
+            border:
+                1px solid #334155;
+
+            border-radius: 15px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            transition: 0.25s;
+
+        }
+
+
+        .info-card:hover {
+
+            transform:
+                translateY(-3px);
+
+            border-color:
+                #6366f1;
+
+            box-shadow:
+                0 0 20px
+                #6366f133;
+
+        }
+
+
+        .info-icon {
+
+            width: 42px;
+
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 12px;
+
+            font-size: 22px;
+
+        }
+
+
+        .score-icon {
+
+            background:
+                #ffe60022;
+
+            color:
+                #ffe600;
+
+        }
+
+
+        .life-icon {
+
+            background:
+                #ef444422;
+
+            color:
+                #ef4444;
+
+        }
+
+
+        .info-content {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .info-content span {
+
+            color: #64748b;
+
+            font-size: 10px;
+
+            font-weight: bold;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .info-content strong {
+
+            margin-top: 3px;
+
+            font-size: 20px;
+
+        }
+
+
+        #score {
+
+            color: #ffe600;
+
+        }
+
+
+        #lives {
+
+            color: #ef4444;
+
+        }
+
+
+        /* =========================
+           CANVAS
+        ========================= */
+
+        .canvas-wrapper {
+
+            position: relative;
+
+            padding: 8px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #312e81,
+                    #0ea5e9,
+                    #312e81
+                );
+
+            box-shadow:
+
+                0 0 25px
+                #312e8155,
+
+                inset 0 0 20px
+                #00000088;
+
+        }
+
+
+        canvas {
+
+            width: 100%;
+
+            height: auto;
+
+            display: block;
+
+            background: #000;
+
+            border:
+                2px solid #1e40af;
+
+            border-radius: 12px;
+
+            box-shadow:
+
+                inset 0 0 30px
+                #000,
+
+                0 0 20px
+                #2563eb66;
+
+        }
+
+
+        /* =========================
+           START BUTTON
+        ========================= */
+
+        button {
+
+            width: 100%;
+
+            margin-top: 20px;
+
+            padding: 14px 25px;
+
+            border: none;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffe600,
+                    #f59e0b
+                );
+
+            color: #111827;
+
+            font-size: 16px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 25px
+                #ffe60033;
+
+            transition:
+                0.25s;
+
+        }
+
+
+        button:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 12px 35px
+                #ffe60066;
+
+        }
+
+
+        button:active {
+
+            transform:
+                translateY(0);
+
+        }
+
+
+        /* =========================
+           CONTROLS
+        ========================= */
+
+        .controls {
+
+            margin-top: 18px;
+
+            padding: 14px;
+
+            background:
+                #111827;
+
+            border:
+                1px solid #1e293b;
+
+            border-radius: 14px;
+
+            text-align: center;
+
+        }
+
+
+        .controls-title {
+
+            color:
+                #94a3b8;
+
+            font-size: 11px;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .keys {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 6px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        .key {
+
+            min-width: 35px;
+
+            padding: 7px 10px;
+
+            background:
+                #1e293b;
+
+            border:
+                1px solid #475569;
+
+            border-radius: 7px;
+
+            color: #e2e8f0;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+
+            margin-top: 18px;
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            color: #64748b;
+
+            font-size: 11px;
+
+        }
+
+
+        .online {
+
+            color:
+                #22c55e;
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media(max-width:600px) {
+
+            body {
+
+                padding: 10px;
+
+            }
+
+
+            .game-container {
+
+                padding: 16px;
+
+                border-radius: 20px;
+
+            }
+
+
+            .game-header h1 {
+
+                font-size: 22px;
+
+                letter-spacing: 2px;
+
+            }
+
+
+            .game-header p {
+
+                font-size: 11px;
+
+            }
+
+
+            .logo {
+
+                width: 48px;
+
+                height: 48px;
+
+                font-size: 27px;
+
+            }
+
+
+            .info-card {
+
+                padding: 10px;
+
+            }
+
+
+            .info-icon {
+
+                width: 35px;
+
+                height: 35px;
+
+                font-size: 18px;
+
+            }
+
+
+            .info-content strong {
+
+                font-size: 16px;
+
+            }
+
+
+            .canvas-wrapper {
+
+                padding: 5px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="game-container">
+
+
+    <!-- HEADER -->
+
+    <div class="game-header">
+
+        <div class="logo">
+            🟡
+        </div>
+
+        <div>
+
+            <h1>PAC-MAN</h1>
+
+            <p>
+                NEON ARCADE • CLASSIC GAME
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- SCORE -->
+
+    <div class="info">
+
+
+        <div class="info-card">
+
+            <div class="info-icon score-icon">
+                ⭐
+            </div>
+
+            <div class="info-content">
+
+                <span>
+                    SCORE
+                </span>
+
+                <strong id="score">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-icon life-icon">
+                ❤️
+            </div>
+
+            <div class="info-content">
+
+                <span>
+                    LIVES
+                </span>
+
+                <strong id="lives">
+                    3
+                </strong>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- GAME -->
+
+    <div class="canvas-wrapper">
+
+        <canvas
+            id="gameCanvas"
+            width="600"
+            height="600">
+        </canvas>
+
+    </div>
+
+
+    <!-- BUTTON -->
+
+    <button id="startButton">
+        ▶ START GAME
+    </button>
+
+
+    <!-- CONTROLS -->
+
+    <div class="controls">
+
+        <div class="controls-title">
+            USE ARROW KEYS TO MOVE
+        </div>
+
+        <div class="keys">
+
+            <div class="key">
+                ↑
+            </div>
+
+            <div class="key">
+                ↓
+            </div>
+
+            <div class="key">
+                ←
+            </div>
+
+            <div class="key">
+                →
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        <span class="online">
+            ● GAME READY
+        </span>
+
+        <span>
+            •
+        </span>
+
+        <span>
+            COLLECT ALL DOTS
+        </span>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+const canvas =
+    document.getElementById("gameCanvas");
+
+const ctx =
+    canvas.getContext("2d");
+
+
+const scoreText =
+    document.getElementById("score");
+
+const livesText =
+    document.getElementById("lives");
+
+const startButton =
+    document.getElementById("startButton");
+
+
+const tileSize = 30;
+
+
+const maze = [
+
+"####################",
+
+"#..................#",
+
+"#.####.#####.####.#",
+
+"#..................#",
+
+"#.####.#####.####.#",
+
+"#......#.....#.....#",
+
+"######.#.###.#.#####",
+
+"#......#...#.#.....#",
+
+"#.####.###.#.####..#",
+
+"#..................#",
+
+"#.####.#####.####.#",
+
+"#..................#",
+
+"####################"
+
+];
+
+
+const rows =
+    maze.length;
+
+const columns =
+    maze[0].length;
+
+
+let dots = [];
+
+let score = 0;
+
+let lives = 3;
+
+let gameRunning = false;
+
+let animationId;
+
+let lastTime = 0;
+
+
+const pacman = {
+
+    x: 1,
+
+    y: 1,
+
+    direction: "right",
+
+    nextDirection: "right",
+
+    moveTimer: 0,
+
+    moveDelay: 120
+
+};
+
+
+const ghost = {
+
+    x: 18,
+
+    y: 11,
+
+    direction: "left",
+
+    moveTimer: 0,
+
+    moveDelay: 260,
+
+    color: "#ff3b3b"
+
+};
+
+
+const directions = {
+
+    up: {
+        x: 0,
+        y: -1
+    },
+
+    down: {
+        x: 0,
+        y: 1
+    },
+
+    left: {
+        x: -1,
+        y: 0
+    },
+
+    right: {
+        x: 1,
+        y: 0
+    }
+
+};
+
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "ArrowUp") {
+
+            pacman.nextDirection = "up";
+
+        }
+
+        if (event.key === "ArrowDown") {
+
+            pacman.nextDirection = "down";
+
+        }
+
+        if (event.key === "ArrowLeft") {
+
+            pacman.nextDirection = "left";
+
+        }
+
+        if (event.key === "ArrowRight") {
+
+            pacman.nextDirection = "right";
+
+        }
+
+
+        if (
+            [
+                "ArrowUp",
+                "ArrowDown",
+                "ArrowLeft",
+                "ArrowRight"
+            ].includes(event.key)
+        ) {
+
+            event.preventDefault();
+
+        }
+
+    }
+);
+
+
+startButton.addEventListener(
+    "click",
+    startGame
+);
+
+
+function buildDots() {
+
+    dots = [];
+
+    for (
+        let y = 0;
+        y < rows;
+        y++
+    ) {
+
+        for (
+            let x = 0;
+            x < columns;
+            x++
+        ) {
+
+            if (maze[y][x] === ".") {
+
+                dots.push({
+                    x: x,
+                    y: y
+                });
+
+            }
+
+        }
+
+    }
+
+}
+
+
+function isWall(x, y) {
+
+    if (
+        x < 0 ||
+        x >= columns ||
+        y < 0 ||
+        y >= rows
+    ) {
+
+        return true;
+
+    }
+
+    return maze[y][x] === "#";
+
+}
+
+
+function canMove(x, y) {
+
+    return !isWall(x, y);
+
+}
+
+
+function drawMaze() {
+
+    ctx.fillStyle = "#000";
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    for (
+        let y = 0;
+        y < rows;
+        y++
+    ) {
+
+        for (
+            let x = 0;
+            x < columns;
+            x++
+        ) {
+
+            if (maze[y][x] === "#") {
+
+                ctx.fillStyle =
+                    "#1725d4";
+
+                ctx.fillRect(
+                    x * tileSize,
+                    y * tileSize,
+                    tileSize,
+                    tileSize
+                );
+
+
+                ctx.strokeStyle =
+                    "#4f6fff";
+
+                ctx.lineWidth = 2;
+
+                ctx.strokeRect(
+                    x * tileSize + 2,
+                    y * tileSize + 2,
+                    tileSize - 4,
+                    tileSize - 4
+                );
+
+            }
+
+        }
+
+    }
+
+
+    /* DOTS */
+
+    dots.forEach(dot => {
+
+        ctx.fillStyle =
+            "#ffeaa7";
+
+        ctx.shadowColor =
+            "#ffe600";
+
+        ctx.shadowBlur = 8;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            dot.x * tileSize + tileSize / 2,
+            dot.y * tileSize + tileSize / 2,
+            3,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+
+    });
+
+}
+
+
+function drawPacman() {
+
+    const centerX =
+        pacman.x * tileSize +
+        tileSize / 2;
+
+    const centerY =
+        pacman.y * tileSize +
+        tileSize / 2;
+
+
+    let angle = 0;
+
+
+    if (
+        pacman.direction === "down"
+    ) {
+
+        angle =
+            Math.PI / 2;
+
+    }
+
+    else if (
+        pacman.direction === "left"
+    ) {
+
+        angle =
+            Math.PI;
+
+    }
+
+    else if (
+        pacman.direction === "up"
+    ) {
+
+        angle =
+            -Math.PI / 2;
+
+    }
+
+
+    ctx.fillStyle =
+        "#ffe600";
+
+    ctx.shadowColor =
+        "#ffe600";
+
+    ctx.shadowBlur = 15;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        centerX,
+        centerY
+    );
+
+
+    ctx.arc(
+
+        centerX,
+
+        centerY,
+
+        tileSize / 2 - 3,
+
+        angle + 0.35,
+
+        angle - 0.35 +
+        Math.PI * 2
+
+    );
+
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    ctx.shadowBlur = 0;
+
+}
+
+
+function drawGhost() {
+
+    const centerX =
+        ghost.x * tileSize +
+        tileSize / 2;
+
+    const centerY =
+        ghost.y * tileSize +
+        tileSize / 2;
+
+    const radius =
+        tileSize / 2 - 3;
+
+
+    ctx.fillStyle =
+        ghost.color;
+
+    ctx.shadowColor =
+        ghost.color;
+
+    ctx.shadowBlur = 12;
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        centerX,
+        centerY - 2,
+        radius,
+        Math.PI,
+        0
+    );
+
+
+    ctx.lineTo(
+        centerX + radius,
+        centerY + radius
+    );
+
+    ctx.lineTo(
+        centerX + radius / 2,
+        centerY + radius - 5
+    );
+
+    ctx.lineTo(
+        centerX,
+        centerY + radius
+    );
+
+    ctx.lineTo(
+        centerX - radius / 2,
+        centerY + radius - 5
+    );
+
+    ctx.lineTo(
+        centerX - radius,
+        centerY + radius
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    ctx.shadowBlur = 0;
+
+
+    /* EYES */
+
+    ctx.fillStyle =
+        "white";
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        centerX - 6,
+        centerY - 5,
+        5,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.arc(
+        centerX + 6,
+        centerY - 5,
+        5,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    ctx.fillStyle =
+        "black";
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        centerX - 6,
+        centerY - 5,
+        2,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.arc(
+        centerX + 6,
+        centerY - 5,
+        2,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+}
+
+
+function movePacman() {
+
+    const next =
+        directions[
+            pacman.nextDirection
+        ];
+
+
+    if (
+        canMove(
+            pacman.x + next.x,
+            pacman.y + next.y
+        )
+    ) {
+
+        pacman.direction =
+            pacman.nextDirection;
+
+    }
+
+
+    const current =
+        directions[
+            pacman.direction
+        ];
+
+
+    if (
+        canMove(
+            pacman.x + current.x,
+            pacman.y + current.y
+        )
+    ) {
+
+        pacman.x += current.x;
+
+        pacman.y += current.y;
+
+    }
+
+
+    collectDot();
+
+}
+
+
+function moveGhost() {
+
+    const possibleDirections =
+        Object.keys(directions)
+        .filter(direction => {
+
+            const move =
+                directions[direction];
+
+            return canMove(
+                ghost.x + move.x,
+                ghost.y + move.y
+            );
+
+        });
+
+
+    if (
+        possibleDirections.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    const currentMove =
+        directions[
+            ghost.direction
+        ];
+
+
+    const canContinue =
+        canMove(
+            ghost.x + currentMove.x,
+            ghost.y + currentMove.y
+        );
+
+
+    if (
+        !canContinue ||
+        Math.random() < 0.35
+    ) {
+
+        ghost.direction =
+            possibleDirections[
+                Math.floor(
+                    Math.random() *
+                    possibleDirections.length
+                )
+            ];
+
+    }
+
+
+    const move =
+        directions[
+            ghost.direction
+        ];
+
+
+    if (
+        canMove(
+            ghost.x + move.x,
+            ghost.y + move.y
+        )
+    ) {
+
+        ghost.x += move.x;
+
+        ghost.y += move.y;
+
+    }
+
+}
+
+
+function collectDot() {
+
+    const dotIndex =
+        dots.findIndex(dot =>
+
+            dot.x === pacman.x &&
+            dot.y === pacman.y
+
+        );
+
+
+    if (dotIndex !== -1) {
+
+        dots.splice(
+            dotIndex,
+            1
+        );
+
+        score += 10;
+
+        scoreText.textContent =
+            score;
+
+    }
+
+
+    if (dots.length === 0) {
+
+        gameWon();
+
+    }
+
+}
+
+
+function checkCollision() {
+
+    return (
+
+        pacman.x === ghost.x &&
+        pacman.y === ghost.y
+
+    );
+
+}
+
+
+function resetPositions() {
+
+    pacman.x = 1;
+
+    pacman.y = 1;
+
+    pacman.direction =
+        "right";
+
+    pacman.nextDirection =
+        "right";
+
+
+    ghost.x = 18;
+
+    ghost.y = 11;
+
+    ghost.direction =
+        "left";
+
+}
+
+
+function loseLife() {
+
+    lives--;
+
+    livesText.textContent =
+        lives;
+
+
+    if (lives <= 0) {
+
+        gameOver();
+
+    }
+
+    else {
+
+        resetPositions();
+
+    }
+
+}
+
+
+function gameWon() {
+
+    gameRunning = false;
+
+    cancelAnimationFrame(
+        animationId
+    );
+
+
+    draw();
+
+
+    showMessage(
+        "YOU WIN!",
+        "#ffe600"
+    );
+
+}
+
+
+function gameOver() {
+
+    gameRunning = false;
+
+    cancelAnimationFrame(
+        animationId
+    );
+
+
+    draw();
+
+
+    showMessage(
+        "GAME OVER",
+        "#ff3b3b"
+    );
+
+}
+
+
+function showMessage(
+    title,
+    color
+) {
+
+    ctx.fillStyle =
+        "rgba(0,0,0,0.78)";
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    ctx.textAlign =
+        "center";
+
+
+    ctx.shadowColor =
+        color;
+
+    ctx.shadowBlur =
+        20;
+
+
+    ctx.fillStyle =
+        color;
+
+    ctx.font =
+        "bold 42px Arial";
+
+
+    ctx.fillText(
+        title,
+        canvas.width / 2,
+        canvas.height / 2
+    );
+
+
+    ctx.shadowBlur =
+        0;
+
+
+    ctx.fillStyle =
+        "white";
+
+    ctx.font =
+        "20px Arial";
+
+
+    ctx.fillText(
+        "Score: " + score,
+        canvas.width / 2,
+        canvas.height / 2 + 45
+    );
+
+}
+
+
+function update(deltaTime) {
+
+    pacman.moveTimer +=
+        deltaTime;
+
+    ghost.moveTimer +=
+        deltaTime;
+
+
+    if (
+        pacman.moveTimer >=
+        pacman.moveDelay
+    ) {
+
+        movePacman();
+
+        pacman.moveTimer = 0;
+
+    }
+
+
+    if (
+        ghost.moveTimer >=
+        ghost.moveDelay
+    ) {
+
+        moveGhost();
+
+        ghost.moveTimer = 0;
+
+    }
+
+
+    if (checkCollision()) {
+
+        loseLife();
+
+    }
+
+}
+
+
+function draw() {
+
+    drawMaze();
+
+    drawPacman();
+
+    drawGhost();
+
+}
+
+
+function gameLoop(timestamp) {
+
+    if (!gameRunning) {
+
+        return;
+
+    }
+
+
+    const deltaTime =
+        timestamp - lastTime;
+
+
+    lastTime =
+        timestamp;
+
+
+    update(deltaTime);
+
+    draw();
+
+
+    animationId =
+        requestAnimationFrame(
+            gameLoop
+        );
+
+}
+
+
+function startGame() {
+
+    score = 0;
+
+    lives = 3;
+
+
+    scoreText.textContent =
+        score;
+
+    livesText.textContent =
+        lives;
+
+
+    buildDots();
+
+    resetPositions();
+
+
+    gameRunning = true;
+
+
+    startButton.textContent =
+        "↻ RESTART GAME";
+
+
+    cancelAnimationFrame(
+        animationId
+    );
+
+
+    lastTime =
+        performance.now();
+
+
+    gameLoop(lastTime);
+
+}
+
+
+/* INITIAL */
+
+buildDots();
+
+drawMaze();
+
+drawPacman();
+
+drawGhost();
+
+</script>
+
+</body>
+</html>
