@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Chess Arena</title>
+
+    <!-- Chess.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+
+
+    <style>
+
+        /* =========================================
+           RESET
+        ========================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        /* =========================================
+           BODY
+        ========================================= */
+
+        body {
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 25px;
+
+            font-family:
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            color: white;
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 10%,
+                    #7c3aed55,
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 90% 90%,
+                    #06b6d455,
+                    transparent 30%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #020617,
+                    #0f172a,
+                    #111827
+                );
+
+        }
+
+
+        /* =========================================
+           GAME CONTAINER
+        ========================================= */
+
+        .game {
+
+            width: 100%;
+
+            max-width: 850px;
+
+            padding: 30px;
+
+            background:
+                rgba(15, 23, 42, 0.92);
+
+            border:
+                1px solid #334155;
+
+            border-radius: 28px;
+
+            box-shadow:
+
+                0 30px 80px
+                rgba(0, 0, 0, 0.65),
+
+                0 0 50px
+                rgba(124, 58, 237, 0.15);
+
+            backdrop-filter: blur(20px);
+
+        }
+
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        .game-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .logo {
+
+            width: 60px;
+            height: 60px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 18px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #8b5cf6,
+                    #4f46e5
+                );
+
+            font-size: 36px;
+
+            box-shadow:
+
+                0 0 25px
+                rgba(139, 92, 246, 0.5);
+
+        }
+
+
+        .game-header h1 {
+
+            font-size: 32px;
+
+            letter-spacing: 3px;
+
+            color: #f8fafc;
+
+        }
+
+
+        .game-header p {
+
+            margin-top: 4px;
+
+            color: #94a3b8;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =========================================
+           PLAYER CARD
+        ========================================= */
+
+        .player-card {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 13px 16px;
+
+            margin-bottom: 20px;
+
+            background: #1e293b;
+
+            border:
+                1px solid #334155;
+
+            border-radius: 16px;
+
+        }
+
+
+        .player-icon {
+
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: #f8fafc;
+
+            color: #111827;
+
+            border-radius: 12px;
+
+            font-size: 27px;
+
+        }
+
+
+        .player-info {
+
+            flex: 1;
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .player-info span {
+
+            color: #64748b;
+
+            font-size: 10px;
+
+            font-weight: bold;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .player-info strong {
+
+            color: #f8fafc;
+
+            font-size: 15px;
+
+        }
+
+
+        /* =========================================
+           STATUS
+        ========================================= */
+
+        #status {
+
+            padding: 9px 16px;
+
+            border-radius: 50px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #312e81,
+                    #4c1d95
+                );
+
+            color: #ddd6fe;
+
+            border:
+                1px solid #6366f1;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            box-shadow:
+                0 0 15px #6366f133;
+
+        }
+
+
+        /* =========================================
+           BOARD WRAPPER
+        ========================================= */
+
+        .board-wrapper {
+
+            width: min(90vw, 650px);
+
+            margin: auto;
+
+            position: relative;
+
+        }
+
+
+        /* =========================================
+           CHESS BOARD
+        ========================================= */
+
+        .board {
+
+            width: 100%;
+
+            aspect-ratio: 1 / 1;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(8, 1fr);
+
+            border:
+                9px solid #020617;
+
+            border-radius: 18px;
+
+            overflow: hidden;
+
+            box-shadow:
+
+                0 0 0 2px #475569,
+
+                0 20px 50px
+                rgba(0, 0, 0, 0.65),
+
+                0 0 30px
+                rgba(124, 58, 237, 0.15);
+
+        }
+
+
+        /* =========================================
+           SQUARE
+        ========================================= */
+
+        .square {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            position: relative;
+
+            cursor: pointer;
+
+            user-select: none;
+
+            font-size:
+                clamp(28px, 8vw, 68px);
+
+            transition:
+                filter 0.2s ease,
+                transform 0.15s ease;
+
+        }
+
+
+        .square:hover {
+
+            filter: brightness(1.15);
+
+        }
+
+
+        /* =========================================
+           CHESS COLORS
+        ========================================= */
+
+        .light {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ede9fe,
+                    #ddd6fe
+                );
+
+        }
+
+
+        .dark {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #5b21b6,
+                    #4c1d95
+                );
+
+        }
+
+
+        /* =========================================
+           SELECTED
+        ========================================= */
+
+        .selected {
+
+            background:
+                #facc15 !important;
+
+            box-shadow:
+
+                inset 0 0 0 5px #fff7ed,
+
+                inset 0 0 30px
+                rgba(245, 158, 11, 0.8);
+
+            transform:
+                scale(0.94);
+
+        }
+
+
+        /* =========================================
+           LEGAL MOVE
+        ========================================= */
+
+        .legal {
+
+            box-shadow:
+
+                inset 0 0 0 5px #22c55e,
+
+                inset 0 0 25px
+                rgba(34, 197, 94, 0.5);
+
+        }
+
+
+        /* =========================================
+           CAPTURE MOVE
+        ========================================= */
+
+        .capture {
+
+            box-shadow:
+
+                inset 0 0 0 5px #ef4444,
+
+                inset 0 0 25px
+                rgba(239, 68, 68, 0.5);
+
+        }
+
+
+        /* =========================================
+           WHITE PIECES
+        ========================================= */
+
+        .white-piece {
+
+            color: white;
+
+            text-shadow:
+
+                2px 2px 2px #111827,
+
+                0 0 8px
+                rgba(255,255,255,0.7);
+
+            transition:
+                transform 0.2s ease;
+
+        }
+
+
+        /* =========================================
+           BLACK PIECES
+        ========================================= */
+
+        .black-piece {
+
+            color: #111827;
+
+            text-shadow:
+
+                1px 1px 2px white,
+
+                0 0 7px
+                rgba(0,0,0,0.7);
+
+            transition:
+                transform 0.2s ease;
+
+        }
+
+
+        .square:hover .white-piece,
+        .square:hover .black-piece {
+
+            transform:
+                scale(1.12);
+
+        }
+
+
+        /* =========================================
+           CONTROLS
+        ========================================= */
+
+        .game-controls {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            margin-top: 25px;
+
+        }
+
+
+        .control-btn {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            padding: 12px 24px;
+
+            border:
+                1px solid #475569;
+
+            border-radius: 12px;
+
+            background: #1e293b;
+
+            color: #e2e8f0;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition:
+                all 0.2s ease;
+
+        }
+
+
+        .control-btn:hover {
+
+            transform:
+                translateY(-3px);
+
+            border-color:
+                #8b5cf6;
+
+            background:
+                #334155;
+
+            box-shadow:
+                0 8px 20px
+                #7c3aed33;
+
+        }
+
+
+        .new-game {
+
+            border: none;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #4f46e5
+                );
+
+            color: white;
+
+        }
+
+
+        .new-game:hover {
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #8b5cf6,
+                    #6366f1
+                );
+
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        .game-footer {
+
+            display: flex;
+
+            gap: 12px;
+
+            margin-top: 22px;
+
+        }
+
+
+        .info-box {
+
+            flex: 1;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 14px;
+
+            background:
+                #111827;
+
+            border:
+                1px solid #1e293b;
+
+            border-radius: 14px;
+
+        }
+
+
+        .info-box span {
+
+            font-size: 23px;
+
+            color:
+                #a78bfa;
+
+        }
+
+
+        .info-box p {
+
+            color:
+                #64748b;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            body {
+
+                padding: 10px;
+
+            }
+
+
+            .game {
+
+                padding: 18px;
+
+                border-radius:
+                    20px;
+
+            }
+
+
+            .game-header h1 {
+
+                font-size: 24px;
+
+                letter-spacing: 2px;
+
+            }
+
+
+            .logo {
+
+                width: 48px;
+
+                height: 48px;
+
+                font-size: 28px;
+
+            }
+
+
+            .player-card {
+
+                padding: 10px;
+
+            }
+
+
+            #status {
+
+                font-size: 11px;
+
+                padding:
+                    7px 10px;
+
+            }
+
+
+            .board {
+
+                border-width: 6px;
+
+                border-radius:
+                    12px;
+
+            }
+
+
+            .game-controls {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .control-btn {
+
+                width: 100%;
+
+            }
+
+
+            .game-footer {
+
+                flex-direction:
+                    column;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="game">
+
+
+        <!-- HEADER -->
+
+        <div class="game-header">
+
+            <div class="logo">
+                ♟
+            </div>
+
+            <div>
+
+                <h1>
+                    CHESS ARENA
+                </h1>
+
+                <p>
+                    Classic Chess • Modern Experience
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- PLAYER -->
+
+        <div class="player-card">
+
+            <div class="player-icon">
+                ♙
+            </div>
+
+            <div class="player-info">
+
+                <span>
+                    CURRENT PLAYER
+                </span>
+
+                <strong>
+                    CHESS PLAYER
+                </strong>
+
+            </div>
+
+            <div id="status">
+                White's turn
+            </div>
+
+        </div>
+
+
+        <!-- BOARD -->
+
+        <div class="board-wrapper">
+
+            <div id="board"
+                class="board">
+            </div>
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="game-controls">
+
+            <button
+                id="undo"
+                class="control-btn">
+
+                ↶
+                <span>
+                    Undo Move
+                </span>
+
+            </button>
+
+
+            <button
+                id="reset"
+                class="control-btn new-game">
+
+                ⟳
+                <span>
+                    New Game
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <div class="game-footer">
+
+            <div class="info-box">
+
+                <span>
+                    ♟
+                </span>
+
+                <p>
+                    Select a piece and
+                    choose its destination.
+                </p>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span>
+                    ⚡
+                </span>
+
+                <p>
+                    Legal moves are
+                    highlighted automatically.
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+<script>
+
+/* ==========================================
+   CHESS GAME
+========================================== */
+
+
+/* DOM ELEMENTS */
+
+const boardElement =
+    document.getElementById("board");
+
+const statusElement =
+    document.getElementById("status");
+
+const undoButton =
+    document.getElementById("undo");
+
+const resetButton =
+    document.getElementById("reset");
+
+
+/* CHESS ENGINE */
+
+const game = new Chess();
+
+
+/* GAME VARIABLES */
+
+let selectedSquare = null;
+
+let legalMoves = [];
+
+
+/* BOARD */
+
+const files =
+    ["a","b","c","d","e","f","g","h"];
+
+const ranks =
+    [8,7,6,5,4,3,2,1];
+
+
+/* PIECES */
+
+const pieces = {
+
+    wp: "♙",
+    wr: "♖",
+    wn: "♘",
+    wb: "♗",
+    wq: "♕",
+    wk: "♔",
+
+    bp: "♟",
+    br: "♜",
+    bn: "♞",
+    bb: "♝",
+    bq: "♛",
+    bk: "♚"
+
+};
+
+
+/* ==========================================
+   CREATE BOARD
+========================================== */
+
+function createBoard() {
+
+    boardElement.innerHTML = "";
+
+    for (let row = 0; row < 8; row++) {
+
+        for (let column = 0; column < 8; column++) {
+
+            const square =
+                document.createElement("div");
+
+
+            const squareName =
+                files[column] +
+                ranks[row];
+
+
+            square.classList.add(
+                "square"
+            );
+
+
+            square.dataset.square =
+                squareName;
+
+
+            if (
+                (row + column) % 2 === 0
+            ) {
+
+                square.classList.add(
+                    "light"
+                );
+
+            } else {
+
+                square.classList.add(
+                    "dark"
+                );
+
+            }
+
+
+            square.addEventListener(
+                "click",
+                squareClicked
+            );
+
+
+            boardElement.appendChild(
+                square
+            );
+
+        }
+
+    }
+
+
+    showPieces();
+
+}
+
+
+/* ==========================================
+   SHOW PIECES
+========================================== */
+
+function showPieces() {
+
+    const board =
+        game.board();
+
+
+    board.forEach(
+        (row, rowIndex) => {
+
+            row.forEach(
+                (piece, columnIndex) => {
+
+                    if (!piece) return;
+
+
+                    const squareName =
+                        files[columnIndex] +
+                        ranks[rowIndex];
+
+
+                    const square =
+                        document.querySelector(
+                            `[data-square="${squareName}"]`
+                        );
+
+
+                    const pieceElement =
+                        document.createElement(
+                            "span"
+                        );
+
+
+                    pieceElement.textContent =
+                        pieces[
+                            piece.color +
+                            piece.type
+                        ];
+
+
+                    pieceElement.className =
+                        piece.color === "w"
+                            ? "white-piece"
+                            : "black-piece";
+
+
+                    square.appendChild(
+                        pieceElement
+                    );
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   CLICK SQUARE
+========================================== */
+
+function squareClicked(event) {
+
+    const clickedSquare =
+        event.currentTarget.dataset.square;
+
+
+    const clickedPiece =
+        game.get(clickedSquare);
+
+
+    /* MOVE */
+
+    if (
+        selectedSquare &&
+        legalMoves.includes(
+            clickedSquare
+        )
+    ) {
+
+        movePiece(
+            selectedSquare,
+            clickedSquare
+        );
+
+        return;
+
+    }
+
+
+    /* SELECT PIECE */
+
+    if (
+        clickedPiece &&
+        clickedPiece.color ===
+        game.turn()
+    ) {
+
+        selectPiece(
+            clickedSquare
+        );
+
+    } else {
+
+        clearSelection();
+
+    }
+
+}
+
+
+/* ==========================================
+   SELECT PIECE
+========================================== */
+
+function selectPiece(square) {
+
+    selectedSquare =
+        square;
+
+
+    legalMoves =
+        game.moves({
+
+            square: square,
+
+            verbose: true
+
+        }).map(
+            move => move.to
+        );
+
+
+    highlightSquares();
+
+}
+
+
+/* ==========================================
+   HIGHLIGHT
+========================================== */
+
+function highlightSquares() {
+
+    clearHighlights();
+
+
+    const selected =
+        document.querySelector(
+            `[data-square="${selectedSquare}"]`
+        );
+
+
+    if (selected) {
+
+        selected.classList.add(
+            "selected"
+        );
+
+    }
+
+
+    legalMoves.forEach(
+        destination => {
+
+            const square =
+                document.querySelector(
+                    `[data-square="${destination}"]`
+                );
+
+
+            if (!square) return;
+
+
+            if (
+                game.get(destination)
+            ) {
+
+                square.classList.add(
+                    "capture"
+                );
+
+            } else {
+
+                square.classList.add(
+                    "legal"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   CLEAR HIGHLIGHTS
+========================================== */
+
+function clearHighlights() {
+
+    document
+        .querySelectorAll(".square")
+        .forEach(square => {
+
+            square.classList.remove(
+                "selected",
+                "legal",
+                "capture"
+            );
+
+        });
+
+}
+
+
+/* ==========================================
+   CLEAR SELECTION
+========================================== */
+
+function clearSelection() {
+
+    selectedSquare = null;
+
+    legalMoves = [];
+
+    clearHighlights();
+
+}
+
+
+
+
+function movePiece(from, to) {
+
+    const move =
+        game.move({
+
+            from: from,
+
+            to: to,
+
+            promotion: "q"
+
+        });
+
+
+    if (!move) {
+
+        statusElement.textContent =
+            "❌ Illegal move";
+
+        return;
+
+    }
+
+
+    clearSelection();
+
+    createBoard();
+
+    updateStatus();
+
+}
+
+
+
+function updateStatus() {
+
+    const currentPlayer =
+        game.turn() === "w"
+            ? "White"
+            : "Black";
+
+
+    /* CHECKMATE */
+
+    if (game.in_checkmate()) {
+
+        const winner =
+            currentPlayer === "White"
+                ? "Black"
+                : "White";
+
+
+        statusElement.textContent =
+            `🏆 Checkmate! ${winner} wins!`;
+
+        return;
+
+    }
+
+
+    /* STALEMATE */
+
+    if (game.in_stalemate()) {
+
+        statusElement.textContent =
+            "🤝 Stalemate! Draw.";
+
+        return;
+
+    }
+
+
+    /* DRAW */
+
+    if (game.in_draw()) {
+
+        statusElement.textContent =
+            "🤝 Draw game.";
+
+        return;
+
+    }
+
+
+    /* CHECK */
+
+    if (game.in_check()) {
+
+        statusElement.textContent =
+            `⚠️ ${currentPlayer}'s turn - Check!`;
+
+        return;
+
+    }
+
+
+    /* NORMAL */
+
+    statusElement.textContent =
+        `♟ ${currentPlayer}'s turn`;
+
+}
+
+
+
+undoButton.addEventListener(
+    "click",
+    function () {
+
+        if (
+            game.history().length === 0
+        ) {
+
+            statusElement.textContent =
+                "⚠️ No moves to undo.";
+
+            return;
+
+        }
+
+
+        game.undo();
+
+        clearSelection();
+
+        createBoard();
+
+        updateStatus();
+
+    }
+);
+
+
+
+resetButton.addEventListener(
+    "click",
+    function () {
+
+        game.reset();
+
+        clearSelection();
+
+        createBoard();
+
+        updateStatus();
+
+    }
+);
+
+
+
+createBoard();
+
+updateStatus();
+
+</script>
+
+
+</body>
+
+</html>
