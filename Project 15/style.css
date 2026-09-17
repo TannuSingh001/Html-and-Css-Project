@@ -1,0 +1,322 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    min-height: 100vh;
+    height: 100vh;
+
+    background: linear-gradient(
+        135deg,
+        #e8f1f8,
+        #dbeafe
+    );
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+/* Main Card */
+.container {
+    width: 850px;
+    max-width: 94vw;
+
+    background: #ffffff;
+
+    border-radius: 18px;
+
+    padding: 28px 38px;
+
+    border: 1px solid #d6e2ec;
+
+    box-shadow:
+        0 18px 45px rgba(15, 45, 70, 0.15);
+
+    position: relative;
+}
+
+/* Top Line */
+.container::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 5px;
+
+    background: #1769aa;
+
+    border-radius: 18px 18px 0 0;
+}
+
+/* Heading */
+h1 {
+    text-align: center;
+
+    color: #123b5d;
+
+    font-size: 28px;
+
+    margin-bottom: 25px;
+
+    font-weight: 700;
+}
+
+h1::after {
+    content: "";
+
+    display: block;
+
+    width: 55px;
+    height: 3px;
+
+    background: #2b7bb9;
+
+    margin: 8px auto 0;
+
+    border-radius: 5px;
+}
+
+/* Form */
+form {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    column-gap: 25px;
+
+    row-gap: 0;
+}
+
+/* Labels */
+label {
+    display: block;
+
+    color: #29465d;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    margin-bottom: 6px;
+}
+
+/* Inputs */
+input,
+select,
+textarea {
+    width: 100%;
+
+    height: 40px;
+
+    padding: 9px 12px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    color: #263f52;
+
+    background: #f8fafc;
+
+    border: 1px solid #ccd9e3;
+
+    border-radius: 7px;
+
+    margin-bottom: 14px;
+
+    transition: all 0.2s ease;
+}
+
+/* Focus */
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+
+    background: #ffffff;
+
+    border-color: #2478b5;
+
+    box-shadow:
+        0 0 0 3px rgba(36, 120, 181, 0.10);
+}
+
+/* Placeholder */
+input::placeholder,
+textarea::placeholder {
+    color: #9aa9b6;
+}
+
+/* Gender */
+.gender {
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 14px;
+}
+
+.gender input {
+    width: auto;
+    height: auto;
+
+    margin: 0;
+
+    accent-color: #1769aa;
+}
+
+.gender label {
+    margin: 0 14px 0 0;
+
+    font-size: 13px;
+
+    font-weight: 400;
+
+    color: #526778;
+
+    cursor: pointer;
+}
+
+/* Address */
+textarea {
+    height: 68px;
+
+    resize: none;
+}
+
+/* Terms */
+.terms {
+    grid-column: 1 / 3;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin: 2px 0 15px;
+}
+
+.terms input {
+    width: auto;
+
+    height: auto;
+
+    margin: 0;
+
+    accent-color: #1769aa;
+}
+
+.terms label {
+    margin: 0;
+
+    font-size: 12px;
+
+    font-weight: 400;
+
+    color: #607586;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+
+    height: 40px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: #123b5d;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+/* Register */
+button[type="submit"] {
+    grid-column: 1;
+}
+
+button:hover {
+    background: #1769aa;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 12px rgba(18, 59, 93, 0.20);
+}
+
+/* Reset */
+button.reset {
+    grid-column: 2;
+
+    background: #f1f5f8;
+
+    color: #40576a;
+
+    border: 1px solid #d1dce5;
+}
+
+button.reset:hover {
+    background: #e4ebf1;
+
+    color: #263f52;
+
+    box-shadow: none;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+
+    body {
+        overflow: auto;
+        height: auto;
+        min-height: 100vh;
+        padding: 20px 0;
+    }
+
+    .container {
+        width: 94%;
+        padding: 25px 20px;
+    }
+
+    form {
+        grid-template-columns: 1fr;
+    }
+
+    .terms {
+        grid-column: 1;
+    }
+
+    button[type="submit"],
+    button.reset {
+        grid-column: 1;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+}

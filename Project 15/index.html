@@ -3,64 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Student Registration Form</title>
+
+   
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<center>
+    <div class="container">
 
-    <h1>Login Page</h1>
+        <h1>Student Registration Form</h1>
 
-    <table border="1" cellpadding="10" cellspacing="0">
+        <form>
 
-        <tr>
-            <td><label for="email">Email:</label></td>
-            <td>
-                <input type="email" id="email" name="email"
-                       placeholder="Enter your email" required>
-            </td>
-        </tr>
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Enter your full name">
 
-        <tr>
-            <td><label for="password">Password:</label></td>
-            <td>
-                <input type="password" id="password" name="password"
-                       placeholder="Enter your password" required>
-            </td>
-        </tr>
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter username">
 
-        <tr>
-            <td colspan="2" align="center">
-                <input type="checkbox" id="remember" name="remember">
-                <label for="remember">Remember Me</label>
-            </td>
-        </tr>
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email">
 
-        <tr>
-            <td colspan="2" align="center">
-                <button type="submit">Login</button>
-                &nbsp;&nbsp;
-                <button type="reset">Reset</button>
-            </td>
-        </tr>
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter password">
 
-        <tr>
-            <td colspan="2" align="center">
-                <a href="#">Forgot Password?</a>
-            </td>
-        </tr>
+            <label for="mobile">Mobile Number</label>
+            <input type="tel" id="mobile" placeholder="Enter mobile number">
 
-        <tr>
-            <td colspan="2" align="center">
-                Don't have an account?
-                <a href="#">Sign Up</a>
-            </td>
-        </tr>
+            <label>Gender</label>
+            <div class="gender">
+                <input type="radio" name="gender" id="male">
+                <label for="male">Male</label>
 
-    </table>
+                <input type="radio" name="gender" id="female">
+                <label for="female">Female</label>
 
-</center>
+                <input type="radio" name="gender" id="other">
+                <label for="other">Other</label>
+            </div>
+
+            <label for="course">Select Course</label>
+            <select id="course">
+                <option value="">-- Select Course --</option>
+                <option value="bca">BCA</option>
+                <option value="mca">MCA</option>
+                <option value="btech">B.Tech</option>
+                <option value="bba">BBA</option>
+                <option value="mba">MBA</option>
+            </select>
+
+            <label for="address">Address</label>
+            <textarea id="address" placeholder="Enter your address"></textarea>
+
+            <div class="terms">
+                <input type="checkbox" id="terms">
+                <label for="terms">I agree to the terms and conditions</label>
+            </div>
+
+            <button type="submit">Register</button>
+            <button type="reset" class="reset">Reset</button>
+
+        </form>
+
+    </div>
 
 </body>
 </html>

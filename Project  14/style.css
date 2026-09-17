@@ -1,0 +1,296 @@
+
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+
+    /* Animated Gradient Background */
+    background: linear-gradient(
+        -45deg,
+        #667eea,
+        #764ba2,
+        #6dd5ed,
+        #667eea
+    );
+
+    background-size: 400% 400%;
+    animation: backgroundMove 10s ease infinite;
+
+    min-height: 100vh;
+}
+
+
+
+
+@keyframes backgroundMove {
+
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+
+
+h1 {
+    color: white;
+    margin-top: 70px;
+    margin-bottom: 25px;
+
+    font-size: 38px;
+    letter-spacing: 1px;
+
+    animation: headingAnimation 1s ease;
+}
+
+
+
+@keyframes headingAnimation {
+
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+
+form {
+    background: rgba(255, 255, 255, 0.95);
+
+    width: 420px;
+    padding: 40px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.25);
+
+    animation: formAnimation 0.8s ease;
+
+    transition: 0.3s ease;
+}
+
+
+
+
+form:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.30);
+}
+
+
+
+@keyframes formAnimation {
+
+    0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+
+table {
+    margin: auto;
+}
+
+tr {
+    height: 50px;
+}
+
+
+
+label {
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+}
+
+
+
+
+input[type="email"],
+input[type="password"] {
+
+    width: 240px;
+
+    padding: 12px;
+
+    margin: 5px 0;
+
+    border: 2px solid #ddd;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: all 0.3s ease;
+}
+
+
+/* Input Hover */
+
+input[type="email"]:hover,
+input[type="password"]:hover {
+
+    border-color: #999;
+}
+
+
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+
+    border-color: #667eea;
+
+    box-shadow:
+        0 0 8px rgba(102, 126, 234, 0.5);
+
+    transform: scale(1.03);
+}
+
+
+
+input[type="checkbox"] {
+
+    accent-color: #667eea;
+
+    margin-right: 5px;
+
+    cursor: pointer;
+}
+
+
+
+
+button {
+
+    padding: 12px 25px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    background: linear-gradient(
+        135deg,
+        #667eea,
+        #764ba2
+    );
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    transition: all 0.3s ease;
+}
+
+
+/* Button Hover */
+
+button:hover {
+
+    transform: translateY(-3px) scale(1.05);
+
+    box-shadow:
+        0 8px 15px rgba(102, 126, 234, 0.4);
+}
+
+
+/* Button Click */
+
+button:active {
+
+    transform: scale(0.95);
+}
+
+
+
+
+button[type="reset"] {
+
+    background: #555;
+}
+
+
+button[type="reset"]:hover {
+
+    background: #333;
+
+    box-shadow:
+        0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+
+
+a {
+
+    color: #667eea;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    transition: all 0.3s ease;
+}
+
+
+/* Link Hover */
+
+a:hover {
+
+    color: #764ba2;
+
+    text-decoration: underline;
+
+    letter-spacing: 0.3px;
+}
+
+
+
+
+input[type="checkbox"] {
+
+    transform: scale(1.1);
+
+    transition: 0.2s;
+}
+
+
+input[type="checkbox"]:hover {
+
+    transform: scale(1.25);
+}
+
