@@ -1,0 +1,634 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+    min-height: 100vh;
+
+    overflow: hidden;
+
+    font-family: Arial, sans-serif;
+
+    color: white;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #263238,
+            #071015 50%,
+            #000000
+        );
+}
+
+
+/* Background */
+
+.background {
+
+    position: fixed;
+
+    width: 100%;
+    height: 100%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,188,212,0.12),
+            transparent 60%
+        );
+
+    animation: backgroundGlow 5s infinite alternate;
+}
+
+@keyframes backgroundGlow {
+
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.2);
+    }
+}
+
+
+/* Stars */
+
+.stars {
+
+    position: fixed;
+
+    inset: 0;
+
+    background-image:
+        radial-gradient(
+            white 1px,
+            transparent 1px
+        );
+
+    background-size: 70px 70px;
+
+    opacity: 0.4;
+
+    animation: starsMove 15s linear infinite;
+}
+
+@keyframes starsMove {
+
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(70px);
+    }
+}
+
+
+/* Main */
+
+.container {
+
+    position: relative;
+
+    z-index: 10;
+
+    text-align: center;
+
+    padding: 20px;
+}
+
+
+/* Title */
+
+h1 {
+
+    font-size: 45px;
+
+    margin-bottom: 5px;
+
+    color: #e0f7fa;
+
+    text-shadow:
+        0 0 10px #00e5ff,
+        0 0 30px #00bcd4;
+
+    animation: titleGlow 2s infinite alternate;
+}
+
+@keyframes titleGlow {
+
+    from {
+        text-shadow:
+            0 0 10px #00bcd4;
+    }
+
+    to {
+        text-shadow:
+            0 0 30px #00e5ff,
+            0 0 60px #00bcd4;
+    }
+}
+
+
+/* Subtitle */
+
+.subtitle {
+
+    font-size: 18px;
+
+    color: #ffca28;
+
+    margin-bottom: 10px;
+
+    letter-spacing: 4px;
+}
+
+
+/* Shiva */
+
+.shiva {
+
+    position: relative;
+
+    width: 320px;
+
+    height: 420px;
+
+    margin: auto;
+}
+
+
+/* Hair */
+
+.hair {
+
+    position: absolute;
+
+    width: 260px;
+
+    height: 150px;
+
+    left: 30px;
+
+    top: 25px;
+
+    background: #111;
+
+    border-radius:
+        50% 50% 30% 30%;
+
+    box-shadow:
+        0 0 20px black,
+        0 0 40px #263238;
+}
+
+.hair::before,
+.hair::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 100px;
+
+    height: 190px;
+
+    top: 20px;
+
+    background: #111;
+
+    border-radius: 50%;
+}
+
+.hair::before {
+    left: -35px;
+}
+
+.hair::after {
+    right: -35px;
+}
+
+
+/* Face */
+
+.face {
+
+    position: absolute;
+
+    width: 190px;
+
+    height: 270px;
+
+    left: 65px;
+
+    top: 95px;
+
+    border-radius:
+        45% 45% 48% 48%;
+
+    background:
+        linear-gradient(
+            #d5f5f7,
+            #78909c
+        );
+
+    box-shadow:
+        0 0 25px #00bcd4;
+}
+
+
+/* Eyes */
+
+.eye {
+
+    position: absolute;
+
+    width: 55px;
+
+    height: 20px;
+
+    top: 80px;
+
+    border-top:
+        4px solid #263238;
+
+    border-radius: 50%;
+}
+
+.eye.left {
+    left: 25px;
+}
+
+.eye.right {
+    right: 25px;
+}
+
+
+/* Third Eye */
+
+.third-eye {
+
+    position: absolute;
+
+    left: 76px;
+
+    top: 100px;
+
+    font-size: 25px;
+
+    animation: fire 1s infinite alternate;
+}
+
+@keyframes fire {
+
+    from {
+        transform: scale(0.8);
+        filter: brightness(1);
+    }
+
+    to {
+        transform: scale(1.2);
+        filter: brightness(2);
+    }
+}
+
+
+/* Tilak */
+
+.tilak {
+
+    position: absolute;
+
+    width: 55px;
+
+    height: 5px;
+
+    left: 67px;
+
+    top: 135px;
+
+    background: #263238;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 10px #263238,
+        0 -10px #263238;
+}
+
+
+/* Nose */
+
+.nose {
+
+    position: absolute;
+
+    width: 5px;
+
+    height: 55px;
+
+    background: #546e7a;
+
+    left: 93px;
+
+    top: 150px;
+}
+
+
+/* Lips */
+
+.lips {
+
+    position: absolute;
+
+    width: 55px;
+
+    height: 15px;
+
+    left: 67px;
+
+    top: 215px;
+
+    border-bottom:
+        4px solid #37474f;
+
+    border-radius: 50%;
+}
+
+
+/* Moon */
+
+.moon {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 130px;
+
+    font-size: 60px;
+
+    color: #fff176;
+
+    z-index: 20;
+
+    text-shadow:
+        0 0 15px #fff176,
+        0 0 30px #ffeb3b;
+
+    animation: moon 2s infinite alternate;
+}
+
+@keyframes moon {
+
+    from {
+        transform: rotate(-20deg);
+    }
+
+    to {
+        transform: rotate(-30deg) scale(1.1);
+    }
+}
+
+
+/* Ganga */
+
+.ganga {
+
+    position: absolute;
+
+    top: 65px;
+
+    left: 185px;
+
+    font-size: 35px;
+
+    z-index: 20;
+
+    animation: ganga 1s infinite alternate;
+}
+
+@keyframes ganga {
+
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(15px);
+    }
+}
+
+
+/* Snake */
+
+.snake {
+
+    position: absolute;
+
+    width: 220px;
+
+    height: 90px;
+
+    left: 50px;
+
+    bottom: 30px;
+
+    border:
+        12px solid #607d8b;
+
+    border-top: none;
+
+    border-radius:
+        0 0 50% 50%;
+
+    z-index: 15;
+}
+
+.snake-head {
+
+    position: absolute;
+
+    left: 140px;
+
+    bottom: 100px;
+
+    font-size: 40px;
+
+    z-index: 20;
+
+    animation: snakeMove 2s infinite alternate;
+}
+
+@keyframes snakeMove {
+
+    from {
+        transform: rotate(-5deg);
+    }
+
+    to {
+        transform: rotate(5deg);
+    }
+}
+
+
+/* Trishul */
+
+.trishul {
+
+    position: absolute;
+
+    right: -70px;
+
+    top: 70px;
+
+    width: 15px;
+
+    height: 290px;
+
+    background: #cfd8dc;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 0 15px #90a4ae;
+
+    z-index: 30;
+}
+
+.trishul-top {
+
+    position: absolute;
+
+    top: -35px;
+
+    left: -20px;
+
+    font-size: 60px;
+
+    color: #cfd8dc;
+
+    text-shadow:
+        0 0 15px white;
+}
+
+
+/* Om */
+
+.om {
+
+    font-size: 60px;
+
+    color: #ffca28;
+
+    margin-top: 0;
+
+    text-shadow:
+        0 0 15px #ff9800,
+        0 0 40px #ff9800;
+
+    animation: om 2s infinite alternate;
+}
+
+@keyframes om {
+
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.15);
+    }
+}
+
+
+/* Mantra */
+
+.mantra {
+
+    margin-top: 5px;
+
+    font-size: 20px;
+
+    letter-spacing: 5px;
+
+    color: white;
+
+    text-shadow:
+        0 0 10px white;
+}
+
+
+/* Buttons */
+
+.buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    margin-top: 20px;
+}
+
+button {
+
+    padding: 12px 25px;
+
+    border: 1px solid #00bcd4;
+
+    border-radius: 30px;
+
+    background: rgba(0,0,0,0.4);
+
+    color: white;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+    box-shadow:
+        0 0 10px #00bcd4;
+}
+
+button:hover {
+
+    transform: scale(1.1);
+
+    background: #00bcd4;
+
+    color: black;
+
+    box-shadow:
+        0 0 30px #00e5ff;
+}
+
+
+/* Message */
+
+#message {
+
+    margin-top: 15px;
+
+    min-height: 25px;
+
+    font-size: 18px;
+
+    color: #ffca28;
+
+    text-shadow:
+        0 0 10px #ff9800;
+}
